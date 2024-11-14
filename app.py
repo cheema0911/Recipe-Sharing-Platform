@@ -8,11 +8,16 @@ from forms import RegistrationForm
 from flask import request
 from flask import redirect, url_for, flash, request
 from forms import CommentForm
-from models import Comment, Recipe, db
+from models import Comment, Recipe, Rating
 from flask_login import current_user, login_required
 from flask_login import login_required
 from flask import jsonify
 from functools import wraps
+from dotenv import load_dotenv
+from forms import RecipeForm
+from forms import RatingForm
+import os
+import sys
 
 db = SQLAlchemy()
 
@@ -154,3 +159,20 @@ def require_api_key(f):
 def protected_route():
     # Sensitive operations here
     return jsonify({"message": "Success, you have access!"})
+
+load_dotenv()
+
+app = Flask(__name__)
+
+# Configure the app with environment variables
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+app.config['FLASK_ENV'] = os.getenv('FLASK_ENV')
+
+os.getenv()
+
+if sys.platform == 'win32':
+    import win32com.client
+else:
+    # Mock or alternative behavior for non-Windows environments
+    pass
