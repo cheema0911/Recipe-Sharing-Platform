@@ -8,7 +8,7 @@ from forms import RegistrationForm
 from flask import request
 from flask import redirect, url_for, flash, request
 from forms import CommentForm
-from models import Comment, Recipe, Rating
+#from models import Comment, Recipe, Rating
 from flask_login import current_user, login_required
 from flask_login import login_required
 from flask import jsonify
@@ -24,8 +24,14 @@ db = SQLAlchemy()
 def create_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///recipe.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
     db.init_app(app)
     return app
+
+app = create_app()
+
+# Rest of your app.py code
 
 app = Flask(__name__)
 app.config.from_object(Config)
