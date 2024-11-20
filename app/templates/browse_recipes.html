@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Browse Recipes{% endblock %}
+
+{% block content %}
+<h1>Browse Recipes</h1>
+<form method="GET" action="{{ url_for('main.browse_recipes') }}">
+    <input type="text" name="keyword" placeholder="Search by keyword" value="{{ request.args.get('keyword', '') }}">
+    <select name="category">
+        <option value="">All Categories</option>
+        <option value="Breakfast">Breakfast</option>
+        <option value="Lunch">Lunch</option>
+        <option value="Dinner">Dinner</option>
+    </select>
+    <button type="submit">Search</button>
+</form>
+<ul>
+    {% for recipe in recipes %}
+        <li>
+            <h2>{{ recipe.title }}</h2>
+            <p>{{ recipe.ingredients }}</p>
+            <p>{{ recipe.instructions }}</p>
+            <p>Category: {{ recipe.category }}</p>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

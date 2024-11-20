@@ -1,27 +1,29 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify
+from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
-from .forms import RegistrationForm, RecipeForm, CommentForm, RatingForm
+from .forms import RegistrationForm, RecipeForm, CommentForm, RatingForm, LoginForm
 from .models import User, Recipe, Comment, Rating
 from .extensions import db, bcrypt
 
 main = Blueprint('main', __name__)
 
+@main.route('/')
+def home():
+    return render_template('home.html')
+
 @main.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-        db.session.add(user)
-        db.session.commit()
-        flash('Account created! You can now log in.', 'success')
-        return redirect(url_for('main.login'))
+        print("Form validated!")  # Debug message
+        return render_template('register_success.html')
+    else:
+        print("Form validation failed.")  # Debug message
+        print(form.errors)  # Print validation errors
     return render_template('register.html', form=form)
 
-@main.route('/recipes')
+@main.route('/browse_recipes')
 def browse_recipes():
-    recipes = Recipe.query.all()
-    return render_template('browse_recipes.html', recipes=recipes)
+    return render_template('browse_recipes.html')
 
 @main.route('/upload_recipe', methods=['GET', 'POST'])
 @login_required
@@ -54,3 +56,13 @@ def recipe_details(recipe_id):
         db.session.commit()
         flash('Your comment has been added!', 'success')
     return render_template('recipe.html', recipe=recipe, form=form)
+
+@main.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()  # Create an instance of the LoginForm
+    if form.validate_on_submit():  # Handle form submission
+        # Add login logic here (e.g., user authentication)
+        flash('Login successful!', 'success')
+        return redirect(url_for('main.home'))
+    return render_template('login.html', form=form)  # Pass the form to the template
+
