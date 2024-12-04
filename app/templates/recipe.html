@@ -1,10 +1,50 @@
 {% extends "base.html" %}
 
-{% block title %}Recipe Details{% endblock %}
+{% block title %}{{ recipe.title }} Details{% endblock %}
 
 {% block content %}
-<h2>{{ recipe.title }}</h2>
+<div class="recipe-details">
+    {% if recipe.image_path %}
+        <img src="{{ url_for('static', filename=recipe.image_path.split('static/')[-1]) }}" alt="{{ recipe.title }}" class="zoomable">
+    {% endif %}
+    <div>
+        <h2>{{ recipe.title }}</h2>
+        <p>{{ recipe.description }}</p>
+        <p><strong>Reposts:</strong> {{ recipe.reposts }}</p>
+    </div>
+</div>
+
+<h3>Ingredients:</h3>
+<p>{{ recipe.ingredients }}</p>
+
+<h3>Instructions:</h3>
 <p>{{ recipe.instructions }}</p>
+
+<p><strong>Average Rating:</strong> {{ average_rating }}</p>
+
+{% if current_user.is_authenticated %}
+<form method="POST" action="{{ url_for('main.rate_recipe', recipe_id=recipe.id) }}">
+    <select name="rating">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select>
+    <button type="submit" class="rate-recipe-btn">Rate Recipe</button>
+</form>
+<form method="POST" action="{{ url_for('main.remove_rating', recipe_id=recipe.id) }}">
+    <button type="submit" class="remove-rating-btn">Remove Rating</button>
+</form>
+
+<form method="POST" action="{{ url_for('main.save_recipe', recipe_id=recipe.id) }}">
+    {% if recipe in current_user.favorite_recipes %}
+        <button type="submit" formaction="{{ url_for('main.unsave_recipe', recipe_id=recipe.id) }}">Unsave Recipe</button>
+    {% else %}
+        <button type="submit">Save Recipe</button>
+    {% endif %}
+</form>
+{% endif %}
 
 <h3>Comments:</h3>
 {% if current_user.is_authenticated %}
@@ -12,13 +52,36 @@
         {{ form.hidden_tag() }}
         {{ form.content.label }}<br>
         {{ form.content(size=40) }}<br>
-        <button type="submit">Submit Comment</button>
+        <button type="submit" class="comment-btn">Post Comment</button>
     </form>
 {% else %}
     <p><a href="{{ url_for('main.login') }}">Log in</a> to post comments.</p>
 {% endif %}
 
 {% for comment in comments %}
-    <p><strong>{{ comment.user.username }}</strong>: {{ comment.content }}</p>
+    <div>
+        <p><strong>{{ comment.user.username }}</strong>: {{ comment.content }}</p>
+        
+        {% if current_user.is_authenticated and comment.user.id == current_user.id %}
+            <!-- Remove Comment Button with custom class -->
+            <form method="POST" action="{{ url_for('main.remove_comment', comment_id=comment.id) }}">
+                <!-- Only one form button should submit at a time -->
+                <button type="submit" class="remove-comment-btn">Remove Comment</button>
+            </form>
+        {% endif %}
+    </div>
 {% endfor %}
+
+{% if current_user.is_authenticated %}
+    {% if reposted %}
+        <form method="POST" action="{{ url_for('main.remove_repost', recipe_id=recipe.id) }}">
+            <button type="submit" class="remove-repost-btn">Remove Repost</button>
+        </form>
+    {% else %}
+        <form method="POST" action="{{ url_for('main.repost_recipe', recipe_id=recipe.id) }}">
+            <button type="submit" class="repost-btn">Repost</button>
+        </form>
+    {% endif %}
+{% endif %}
+
 {% endblock %}

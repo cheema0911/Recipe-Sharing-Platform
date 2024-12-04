@@ -25,18 +25,21 @@ def create_app():
     app = Flask(__name__)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///recipe.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['UPLOAD_FOLDER'] = 'path_to_static/uploads'  
+    app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  
 
     db.init_app(app)
     return app
 
 app = create_app()
 
-# Rest of your app.py code
+
 
 app = Flask(__name__)
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
+login_manager = LoginManager(app)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -52,23 +55,7 @@ def register():
 
 @app.route('/recipes')
 def browse_recipes():
-    recipes = Recipe.query.all()  # Fetch all recipes from the database
-    return render_template('browse_recipes.html', recipes=recipes)
-# Get filters from query parameters
-    category = request.args.get('category')
-    keyword = request.args.get('keyword')
-
-    # Start with base query
-    query = Recipe.query
-
-    # Apply filters if provided
-    if category:
-        query = query.filter_by(category=category)
-    if keyword:
-        query = query.filter(Recipe.title.contains(keyword) | Recipe.ingredients.contains(keyword))
-
-    # Execute query to fetch filtered results
-    recipes = query.all()
+    recipes = Recipe.query.all()  
     return render_template('browse_recipes.html', recipes=recipes)
 
 @app.route('/upload_recipe', methods=['GET', 'POST'])
@@ -101,7 +88,7 @@ def recipe_details(recipe_id):
         db.session.commit()
         flash('Your comment has been added!', 'success')
         return redirect(url_for('recipe_details', recipe_id=recipe_id))
-    comments = recipe.comments  # Get all comments for the recipe
+    comments = recipe.comments  
     return render_template('recipe.html', recipe=recipe, form=form, comments=comments)
 
     average_rating = db.session.query(db.func.avg(Rating.value)).filter_by(recipe_id=recipe_id).scalar()
@@ -146,14 +133,10 @@ def api_get_recipe(recipe_id):
         'comments': comments
     })
 
-#To access the /api/protected endpoint, the client must include the API key in the header:
-#POST /api/protected HTTP/1.1
-#Host: yourdomain.com
-#x-api-key: YOUR_UNIQUE_API_KEY
 def require_api_key(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        api_key = request.headers.get('x-api-key')  # Expect API key in request headers
+        api_key = request.headers.get('x-api-key')  
         user = User.query.filter_by(api_key=api_key).first()
         if not user:
             return jsonify({"message": "Invalid or missing API key"}), 403
@@ -163,14 +146,12 @@ def require_api_key(f):
 @app.route('/api/protected',methods=['POST'])
 @require_api_key
 def protected_route():
-    # Sensitive operations here
     return jsonify({"message": "Success, you have access!"})
 
 load_dotenv()
 
 app = Flask(__name__)
 
-# Configure the app with environment variables
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['FLASK_ENV'] = os.getenv('FLASK_ENV')
@@ -180,5 +161,5 @@ os.getenv()
 if sys.platform == 'win32':
     import win32com.client
 else:
-    # Mock or alternative behavior for non-Windows environments
+
     pass

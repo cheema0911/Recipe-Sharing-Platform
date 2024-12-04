@@ -5,4 +5,18 @@
 {% block content %}
 <h1>Welcome to The Recipe Planet!</h1>
 <p>Discover and share recipes with food lovers around the world.</p>
+
+<h2>Suggested Recipes</h2>
+<div class="recipes-grid">
+    {% for recipe in suggested_recipes %}
+        <div class="recipe-card">
+            {% if recipe.image_path %}
+                <img src="{{ url_for('static', filename='uploads/' + recipe.image_path.split('/')[-1]) }}" alt="{{ recipe.title }}">
+            {% endif %}
+            <h2>{{ recipe.title }}</h2>
+            <p class="description">{{ recipe.description }}</p>
+            <a href="{{ url_for('main.recipe', recipe_id=recipe.id) }}">View Recipe</a>
+        </div>
+    {% endfor %}
+</div>
 {% endblock %}

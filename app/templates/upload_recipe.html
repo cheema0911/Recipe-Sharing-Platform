@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Recipe{% endblock %}
+
+{% block content %}
+<h1>Upload Your Recipe</h1>
+<form method="POST" action="{{ url_for('main.upload_recipe') }}" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+
+    <div>
+        {{ form.title.label }}<br>
+        {{ form.title(size=40) }}<br>
+    </div>
+    <div>
+        {{ form.description.label }}<br>
+        {{ form.description(rows=4, cols=40) }}<br>
+    </div>
+    <div>
+        {{ form.ingredients.label }}<br>
+        {{ form.ingredients(rows=4, cols=40) }}<br>
+    </div>
+    <div>
+        {{ form.instructions.label }}<br>
+        {{ form.instructions(rows=4, cols=40) }}<br>
+    </div>
+    <div>
+        {{ form.category.label }}<br>
+        {{ form.category }}<br>
+    </div>
+    <div>
+        {{ form.dietary.label }}<br>
+        {{ form.dietary }}<br>
+    </div>
+    <div>
+        {{ form.difficulty.label }}<br>
+        {{ form.difficulty }}<br>
+    </div>
+    <div>
+        {{ form.image.label }}<br>
+        {{ form.image }}<br>
+    </div>
+    <div>
+        <button type="submit">Upload Recipe</button>
+    </div>
+</form>
+{% endblock %}

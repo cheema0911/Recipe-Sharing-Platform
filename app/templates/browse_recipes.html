@@ -12,16 +12,32 @@
         <option value="Lunch">Lunch</option>
         <option value="Dinner">Dinner</option>
     </select>
+    <select name="dietary">
+        <option value="">All Diets</option>
+        <option value="Vegan">Vegan</option>
+        <option value="Halal">Halal</option>
+        <option value="Gluten-Free">Gluten-Free</option>
+    </select>
+    <select name="difficulty">
+        <option value="">Any Difficulty</option>
+        <option value="Easy">Easy</option>
+        <option value="Medium">Medium</option>
+        <option value="Hard">Hard</option>
+    </select>
     <button type="submit">Search</button>
 </form>
-<ul>
+
+<div class="recipes-grid">
     {% for recipe in recipes %}
-        <li>
+        <div class="recipe-card">
+            {% if recipe.image_path %}
+                <img src="{{ url_for('static', filename='uploads/' + recipe.image_path.split('/')[-1]) }}" alt="{{ recipe.title }}">
+            {% endif %}
             <h2>{{ recipe.title }}</h2>
-            <p>{{ recipe.ingredients }}</p>
-            <p>{{ recipe.instructions }}</p>
-            <p>Category: {{ recipe.category }}</p>
-        </li>
+            <p class="description">{{ recipe.description }}</p>
+            <p><strong>Category:</strong> {{ recipe.category }}</p>
+            <a href="{{ url_for('main.recipe', recipe_id=recipe.id) }}">View Recipe</a>
+        </div>
     {% endfor %}
-</ul>
+</div>
 {% endblock %}

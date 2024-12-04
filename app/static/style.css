@@ -10,11 +10,20 @@ body {
 
 /* Header */
 header {
-    background-color: #4169E1;
-    color: #fff;
+    background-color: #4169E1; /* Header background color */
+    color: #ffffff; /* Header text color */
     padding: 15px 0;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.zoomable {
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+.zoomable:hover {
+    transform: scale(1.2);
 }
 
 header nav ul {
@@ -26,15 +35,54 @@ header nav ul {
     gap: 20px;
 }
 
+header nav ul li {
+    border-radius: 10px; /* Rounded edges for navigation items */
+}
+
 header nav ul li a {
-    color: #fff;
+    color: #000000; /* Link color */
     text-decoration: none;
     font-size: 16px;
-    transition: color 0.3s;
+    transition: color 0.3s; /* Transition effect for hover */
+    padding: 10px 15px; /* Add padding for better click area */
+    background-color: #d8b5b5; /* Background color for links */
+    border-radius: 10px; /* Rounded edges for link backgrounds */
 }
 
 header nav ul li a:hover {
-    color: #ffdd57;
+    color: #ffdd57; /* Hover color for links */
+}
+
+/* Dropdown Styles */
+nav ul li {
+    position: relative; /* To position the dropdown */
+}
+
+nav ul .dropdown {
+    display: none; /* Hide dropdown by default */
+    position: absolute; /* Position it absolutely */
+    background-color: #fff; /* Background color for dropdown */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow effect for dropdown */
+    border-radius: 5px; /* Rounded edges for dropdown */
+}
+
+nav ul li:hover .dropdown {
+    display: block; /* Show dropdown on hover */
+}
+
+.dropdown li {
+    list-style: none; /* Remove bullets from dropdown items */
+}
+
+.dropdown li a {
+    color: #333333; /* Color for dropdown links */
+    padding: 12px 16px; /* Padding for dropdown links */
+    text-decoration: none; /* Remove underline from links */
+    display: block; /* Make links fill the entire dropdown item */
+}
+
+.dropdown li a:hover {
+    background-color: #ddd; /* Background color on hover for dropdown links */
 }
 
 /* Main Content */
@@ -43,7 +91,7 @@ main {
     max-width: 900px;
     margin: 20px auto;
     background: #fff;
-    border-radius: 10px;
+    border-radius: 10px; /* Rounded edges for main content */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
@@ -54,84 +102,330 @@ form {
     gap: 15px;
 }
 
-form input, form select, form button {
+form input,
+form select,
+form button {
     padding: 12px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 5px; /* Rounded edges for form elements */
     font-size: 16px;
 }
 
-form input:focus, form select:focus {
-    border-color: #007BFF;
-    outline: none;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+form input:focus,
+form select:focus {
+    border-color: #007BFF; /* Border color on focus */
+    outline: none; 
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Shadow effect on focus */
 }
 
 form button {
-    background-color: #007BFF;
-    color: #fff;
+    background-color: #007BFF; /* Button background color */
+    color: #fff; 
     font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    border: none;
+    cursor: pointer; 
+    transition: background-color 0.3s; 
 }
 
 form button:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Button hover color */
 }
 
 /* Flash Messages */
 .flash-messages {
-    margin-bottom: 20px;
+    margin-bottom: 20px; 
 }
 
 .alert {
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    font-size: 14px;
-    text-align: center;
+    padding: 15px; 
+    margin-bottom: 15px; 
+    border-radius: 5px; 
+    font-size: 14px; 
+    text-align: center; 
 }
 
 .alert-success {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
+     background-color:#d4edda ; 
+     color:#155724 ; 
+     border :1px solid #c3e6cb ; 
 }
 
 .alert-danger {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
+     background-color:#f8d7da ; 
+     color:#721c24 ; 
+     border :1px solid #f5c6cb ; 
+}
+
+/* Info Message (for logout) */
+.alert-info {
+     background-color:#cce5ff ; 
+     color:#004085 ; 
+     border :1px solid #b8daff ; 
 }
 
 /* Footer */
 footer {
-    text-align: center;
-    padding: 15px;
-    background-color: #F96167;
-    color: #fff;
-    margin-top: 30px;
-    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+     text-align:center ; 
+     padding :15 px ; 
+     background-color :#F96167 ; 
+     color :#fff ; 
+     margin-top :30 px ; 
+     box-shadow :0 -2 px 4 px rgba(0 ,0 ,0 ,0.1) ; 
 }
 
 footer p {
-    margin: 0;
-    font-size: 14px;
+     margin :0 ; 
+     font-size :14 px ; 
 }
 
 /* Centered Content for Success Messages */
 .centered {
-    text-align: center;
-    margin-top: 100px;
+     text-align:center ; 
+     margin-top :100 px ; 
 }
 
 .centered h1 {
-    font-size: 24px;
-    color: #007BFF;
+     font-size :24 px ; 
+     color :#007BFF ; 
 }
 
 .centered p {
-    font-size: 18px;
-    color: #333;
+     font-size :18 px ; 
+     color :#060606 ; 
+}
+
+/* Images in Recipes */
+ul img {
+     border-radius :10 px ; 
+     margin-bottom :15 px ; 
+}
+
+/* Recipe List */
+ul {
+     list-style:none ; 
+     padding :0 ; 
+}
+
+ul li {
+     background :#b9acb7 ; 
+     padding :20 px ; 
+     margin-bottom :15 px ; 
+     border-radius :10 px ;
+     box-shadow :0 4 px 6 px rgba(117, 95, 121, 0.985) ;
+}
+
+/* Recipe Title */
+ul li h2 {
+      font-size :24 px ;
+      color :#4169E1 ;
+}
+
+/* Recipe Details */
+ul li p {
+      margin :5 px 0 ;
+      font-size :16 px ;
+      line-height :1.5 ;
+}
+
+/* Recipe Details */
+.recipe-details img {
+    max-width: 100%; /* Ensure the image is responsive and fits the container */
+    max-height: 400px; /* Limit the image height */
+    display: block; /* Center the image horizontally */
+    margin: 0 auto; /* Center the image using auto margin */
+    border-radius: 8px; /* Add rounded corners for aesthetics */
+    object-fit: contain; /* Ensure the image fits within its bounds without distortion */
+}
+
+/* Center "View Recipe" Button */
+.recipe-card .view-recipe-button {
+    margin-top: auto; /* Push the button to the bottom */
+    text-align: center; /* Centers the button */
+    padding-bottom: 20px; /* Add some spacing at the bottom of the card */
+}
+
+.recipe-card a {
+    display: block; /* Ensures the button takes up the necessary space */
+    text-align: center; /* Centers the button text */
+    background-color: #007BFF; /* Button background color */
+    color: #fff; /* Button text color */
+    text-decoration: none; /* Remove underline */
+    padding: 10px 20px; /* Add padding for button size */
+    border-radius: 5px; /* Rounded corners */
+    font-weight: bold; /* Emphasize button text */
+    transition: background-color 0.3s; /* Smooth transition */
+    margin: 0 auto; /* Center the button horizontally */
+    width: fit-content; /* Make button adapt to content size */
+}
+
+.recipe-card a:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+
+.recipe-details a {
+    display: block; /* Make the button behave like a block element */
+    text-align: center; /* Center the button text */
+    margin: 20px auto; /* Add spacing around and center it */
+    background-color: #007BFF; /* Ensure consistent button styles */
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px; /* Rounded corners for consistency */
+    width: fit-content; /* Make the button's width adapt to the text */
+    font-weight: bold; /* Optional: Emphasize the button */
+    transition: background-color 0.3s;
+}
+
+.recipe-details a:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Recipe Grid */
+.recipes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+    gap: 20px; /* Space between cards */
+    padding: 20px;
+}
+
+/* Recipe Cards */
+.recipe-card {
+    display: flex;
+    flex-direction: column; /* Stack card content vertically */
+    justify-content: space-between; /* Distribute content evenly */
+    height: 100%; /* Ensure consistent card height */
+    background: #fff; /* Card background color */
+    border: 1px solid #ddd; /* Border for card */
+    border-radius: 10px; /* Rounded corners */
+    overflow: hidden; /* Crop overflowing content */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: transform 0.2s ease;
+}
+
+.recipe-card:hover {
+      transform :translateY(-5px); /* Updated hover effect to translate -10 pixels on hover*/
+      box-shadow :0 6 px 10 px rgba(0 ,0 ,0 ,0.2) ;
+}
+
+.recipe-card img {
+    width: 100%; /* Scale the image to fit the card */
+    height: auto; /* Maintain the aspect ratio */
+    max-height: 200px; /* Prevent images from being too tall */
+    object-fit: cover; /* Crop the image to fit its container */
+    border-radius: 8px; /* Optional: Add rounded corners */
+    transition: transform 0.3s ease; /* Smooth zoom effect */
+}
+
+.recipe-card img:hover {
+    transform: scale(1.05); /* Subtle zoom on hover */
+}
+
+.recipe-card p {
+    font-size: 14px; /* Adjust description size */
+    margin: 10px; /* Add spacing */
+    color: #555; /* Dim text color */
+}
+
+.recipe-card .description {
+      font-size :14 px ;
+      color :#666 ;
+      margin-bottom :10 px ;
+}
+
+/* Remove Comment Button Style */
+.remove-comment-btn {
+    background-color: #d32f2f !important; /* Dark red for remove button */
+    color: white !important;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: center;
+}
+
+.remove-comment-btn:hover {
+    background-color: #c62828 !important; /* Darker red for hover effect */
+}
+
+.remove-repost-btn {
+    background-color: #d32f2f; /* Dark red for the button */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.remove-repost-btn:hover {
+    background-color: #c62828; /* Darker red on hover */
+}
+
+/* Repost Button (Green) */
+.repost-btn {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.repost-btn:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+/* Comment Button (Pale Yellow) */
+.comment-btn {
+    background-color: #aea878; /* Pale yellow */
+    color: #000;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.comment-btn:hover {
+    background-color: #fff59d; /* Slightly darker yellow on hover */
+}
+
+/* Rate Recipe Button Style (Orange) */
+.rate-recipe-btn {
+    background-color: #FFA500; /* Orange color */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.rate-recipe-btn:hover {
+    background-color: #FF8C00; /* Darker orange on hover */
+}
+
+.remove-rating-btn {
+    background-color: #d9534f; /* Bootstrap-like Danger Red */
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    text-align: center;
+}
+
+.remove-rating-btn:hover {
+    background-color: #c9302c; /* Darker red on hover */
 }

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}{{ user.username }}'s Profile{% endblock %}
+{% block content %}
+<h1>{{ user.username }}</h1>
+<p>Email: {{ user.email }}</p>
+
+<a href="{{ url_for('main.upload_recipe') }}" style="background-color: #749029; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Upload Recipe</a>
+
+<h2>Your Uploaded Recipes</h2>
+{% if recipes %}
+    <div class="recipes-grid">
+        {% for recipe in recipes %}
+            <div class="recipe-card">
+                {% if recipe.image_path %}
+                    <img src="{{ url_for('static', filename=recipe.image_path.split('static/')[-1]) }}" alt="{{ recipe.title }}">
+                {% endif %}
+                <h2>{{ recipe.title }}</h2>
+                <p class="description">{{ recipe.description }}</p>
+                <a href="{{ url_for('main.recipe', recipe_id=recipe.id) }}">View Recipe</a>
+
+                <form method="POST" action="{{ url_for('main.delete_recipe', recipe_id=recipe.id) }}">
+                    <button type="submit" style="background-color: #f44336; color: white; border: none; border-radius: 5px; padding: 5px 10px; cursor: pointer;">
+                        Delete Recipe
+                    </button>
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>You haven't uploaded any recipes yet.</p>
+{% endif %}
+
+<h2>Your Saved Recipes</h2>
+{% if saved_recipes %}
+    <div class="recipes-grid">
+        {% for recipe in saved_recipes %}
+            <div class="recipe-card">
+                {% if recipe.image_path %}
+                    <img src="{{ url_for('static', filename=recipe.image_path.split('static/')[-1]) }}" alt="{{ recipe.title }}">
+                {% endif %}
+                <h2>{{ recipe.title }}</h2>
+                <p class="description">{{ recipe.description }}</p>
+                <a href="{{ url_for('main.recipe', recipe_id=recipe.id) }}">View Recipe</a>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>You haven't saved any recipes yet.</p>
+{% endif %}
+{% endblock %}
