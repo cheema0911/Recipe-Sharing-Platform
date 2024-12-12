@@ -8,7 +8,6 @@ from forms import RegistrationForm
 from flask import request
 from flask import redirect, url_for, flash, request
 from forms import CommentForm
-#from models import Comment, Recipe, Rating
 from flask_login import current_user, login_required
 from flask_login import login_required
 from flask import jsonify
